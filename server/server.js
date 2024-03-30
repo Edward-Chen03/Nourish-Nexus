@@ -88,7 +88,7 @@ app.post('/updateIngredients', (req, res) => {
 
 app.post('/updatePersonalInformation', (req, res) => {
   //request is an array of ingredients
-  update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight;
+  update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight + " pounds.";
   console.log(update);
   conversation.push(update);
   res.send("Fitness Goal has been updated");

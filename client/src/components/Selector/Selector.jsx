@@ -5,12 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect({label, options}) {
+export default function BasicSelect({label, options, onSelect}) {
   const [goal, setGoal] = React.useState('');
 
   const handleChange = (event) => {
     setGoal(event.target.value);
-    onSelectGoal(event.target.value);
+    onSelect(event.target.value);
   };
 
   return (
