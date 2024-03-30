@@ -13,7 +13,7 @@ export default function SideBar() {
             </span>  
             <span className="itemList">
                 <a className='listItem' href="/PersonalInformation">
-                    PERSONAL INFORMATION
+                    <span className='rubik-scribble-regular'>PERSONAL INFORMATION</span>
                 </a>
 
                 <a className='listItem' href="/Ingredients">
