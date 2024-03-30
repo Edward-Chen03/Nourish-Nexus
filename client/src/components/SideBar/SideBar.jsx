@@ -1,26 +1,26 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import "./SideBar.css";
-import defaultPFP from '../../../public/default_pfp.jpg'
+import defaultPFP from '/default_pfp.jpg'
 
 export default function SideBar() {
     return (
         <>
-        <span className="container">
+        <span className="sideBarContainer">
             {/*Profile Picture */}
             <span className="profilePicture">
                 <Avatar sx={{width: 100, height: 100}} src={defaultPFP}></Avatar>
             </span>  
             <span className="itemList">
-                <a className='listItem'>
+                <a className='listItem' href="/PersonalInformation">
                     PERSONAL INFORMATION
                 </a>
 
-                <a className='listItem'>
+                <a className='listItem' href="/Ingredients">
                     INGREDIENTS
                 </a>
 
-                <a className='listItem'>
+                <a className='listItem' href="/Recipes">
                     RECIPES
                 </a>
             </span>
