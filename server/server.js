@@ -19,7 +19,7 @@ app.listen(port, () => {
 
 const openai = new OpenAI();
 
-let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in their kitchen and their fitness goals" },
+let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me" },
 { role: "assistant", content: "I currently have no ingredients in my kitchen and no fitness goals" }]
 
 async function generateCompletion(conversation) {
@@ -63,7 +63,7 @@ app.post('/updateIngredients', (req, res) => {
 
 app.post('/updatePersonalInformation', (req, res) => {
   //request is an array of ingredients
-  update = "My fitness goal is now: " + req.body.goal;
+  update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight;
   console.log(update);
   conversation.push(update);
   res.send("Fitness Goal has been updated");
