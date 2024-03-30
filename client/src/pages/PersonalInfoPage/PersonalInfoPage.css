@@ -5,3 +5,26 @@
     justify-content: center;
     gap: 30px;
 }
+
+.saveContainer {
+    width: 75%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.saveButton {
+    width: fit-content;
+    font-size: 24px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.saveButton:active {
+    transform: scale(0.95); /* Button scale when pressed */
+};

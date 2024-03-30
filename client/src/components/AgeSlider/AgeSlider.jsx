@@ -16,10 +16,11 @@ const marks = [
   },
 ];
 
-export default function AgeSlider() {
+export default function AgeSlider({onSelectAge}) {
   const [val, setVal] = React.useState(MIN);
   const handleChange = (_, newValue) => {
     setVal(newValue);
+    onSelectAge(newValue);
   };
 
   return (
