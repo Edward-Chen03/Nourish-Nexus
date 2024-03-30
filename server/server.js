@@ -13,9 +13,25 @@ app.use(express.json());
 app.use(cors());
 const port = 3000
 
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
+const uri = process.env.NOURISHMONGO;
+let mongoose = require('mongoose');
+
+mongoose.connect(uri);
+let db = mongoose.connection;
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('connected', function () {
+
+  console.log("db connected!");
+
+})
 
 const openai = new OpenAI();
 
@@ -56,7 +72,7 @@ app.post('/updateIngredients', (req, res) => {
 
 
   console.log(update);
-  newConvoEntry = {role: "assistant", content: update};
+  newConvoEntry = { role: "assistant", content: update };
   conversation.push(newConvoEntry);
   res.send("ingredients have been updated");
 })
