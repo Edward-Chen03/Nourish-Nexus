@@ -61,7 +61,7 @@ app.post('/updateIngredients', (req, res) => {
   res.send("ingredients have been updated");
 })
 
-app.post('/updateFitnessGoal', (req, res) => {
+app.post('/updatePersonalInformation', (req, res) => {
   //request is an array of ingredients
   update = "My fitness goal is now: " + req.body.goal;
   console.log(update);

@@ -5,11 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect() {
+export default function GoalSelector({onSelectGoal}) {
   const [goal, setGoal] = React.useState('');
 
   const handleChange = (event) => {
     setGoal(event.target.value);
+    onSelectGoal(event.target.value);
   };
 
   return (
@@ -25,7 +26,7 @@ export default function BasicSelect() {
         >
           <MenuItem value={"Gain Weight"}>Gain Weight</MenuItem>
           <MenuItem value={"Lose Weight"}>Lose Weight</MenuItem>
-          <MenuItem value={"Get Swoll"}>Get Swoll</MenuItem>
+          <MenuItem value={"Gain Muscle"}>Get Swoll</MenuItem>
           <MenuItem value={"Maintain Weight"}>Maintain Weight</MenuItem>
         </Select>
       </FormControl>
