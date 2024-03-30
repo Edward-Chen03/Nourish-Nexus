@@ -26,6 +26,9 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
+let Users = require('./models/users');
+let IngredientsList = require('./models/ingredients');
+
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.on('connected', function () {
 
@@ -54,6 +57,12 @@ async function generateCompletion(conversation) {
   }
 
 }
+
+app.post('/addUser', (req, res) =>{
+  
+  console.log(req.body);
+  
+})
 
 app.post('/updateIngredients', (req, res) => {
   //request is an array of ingredients
