@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect() {
+export default function BasicSelect({label, options}) {
   const [goal, setGoal] = React.useState('');
 
   const handleChange = (event) => {
@@ -15,18 +15,18 @@ export default function BasicSelect() {
   return (
     <Box sx={{ minWidth: 120, width: "75%"}}>
       <FormControl fullWidth>
-        <InputLabel id="basic-select-label">Fitness Goal</InputLabel>
+        <InputLabel id="basic-select-label">{label}</InputLabel>
         <Select
           labelId="basic-select-label"
           id="basic-select"
           value={goal}
-          label="Fitness Goal"
+          label={label}
           onChange={handleChange}
         >
-          <MenuItem value={"Gain Weight"}>Gain Weight</MenuItem>
-          <MenuItem value={"Lose Weight"}>Lose Weight</MenuItem>
-          <MenuItem value={"Get Swoll"}>Get Swoll</MenuItem>
-          <MenuItem value={"Maintain Weight"}>Maintain Weight</MenuItem>
+          {options.map((option, index) => {
+            return <MenuItem key={index} value={option}>{option}</MenuItem>
+          })}
+
         </Select>
       </FormControl>
     </Box>
