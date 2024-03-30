@@ -5,8 +5,27 @@ import BasicTextField from "../../components/BasicTextField/BasicTextField"
 import AgeSlider from "../../components/AgeSlider/AgeSlider"
 import "./PersonalInfoPage.css"
 import { Button } from "@mui/material"
+import {useState} from 'react';
+import axios from 'axios';
 
 export default function PersonalInfoPage() {
+    const [goalChange, setGoalChange] = useState('');
+
+    const handleGoalChange = (goal) => {
+        setGoalChange(goal);
+        console.log("goal Changed")
+    };
+
+    const updateChanges = async () => {
+        await axios.post('http://localhost:3000/updatePersonalInformation', {
+
+            goal: goalChange
+
+        }).then(
+            //made create a popup to tell people that there information was updated
+            console.log("Settings have been updated")
+        );
+    }
     const fitnessGoalOptions = ["Gain Weight", "Lose Weight", "Grow Muscle", "Maintain Weight"]
     const genderOptions = ["Male", "Female"]
     const weightOptions = ["< 100", "< 150", "< 200", "< 250", "< 300", "> 350" ]
@@ -30,7 +49,8 @@ export default function PersonalInfoPage() {
                 </span>
 
             </ContentWrapper>
-        </span>   
+        </span>
+        <button onClick={updateChanges}>Save Changes</button>   
         </>
     )
 }

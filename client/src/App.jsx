@@ -8,15 +8,19 @@ import DummyPage1 from "./pages/DummyPage1"
 import PersonalInfoPage from './pages/PersonalInfoPage/PersonalInfoPage';
 import Ingredients from './pages/IngredientsPage/IngredientsPage';
 import Recipes from './pages/RecipesPage/RecipesPage'
+import Login from "./pages/Login"
 
 function App() {
+
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
 
   return (
 
     <Router>
       <Routes>
-
-      <Route path = "/" element = {<HomePage />} />
+      <Route path = "/" element = {<Login setUserEmail={setUserEmail} setUserName = {setUserName} />} />
+      <Route path = "/home" element = {<HomePage />} />
       <Route path = "/DummyPage1" element = {<DummyPage1 />} />
       <Route path = "/PersonalInformation" element = {<PersonalInfoPage/>} />
       <Route path = "/Ingredients" element = {<Ingredients/>} />
