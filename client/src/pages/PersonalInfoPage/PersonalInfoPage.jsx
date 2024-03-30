@@ -4,6 +4,7 @@ import Selector from "../../components/Selector/Selector"
 import BasicTextField from "../../components/BasicTextField/BasicTextField"
 import AgeSlider from "../../components/AgeSlider/AgeSlider"
 import "./PersonalInfoPage.css"
+import { Button } from "@mui/material"
 
 export default function PersonalInfoPage() {
     const fitnessGoalOptions = ["Gain Weight", "Lose Weight", "Grow Muscle", "Maintain Weight"]
@@ -22,9 +23,12 @@ export default function PersonalInfoPage() {
                     <Selector label="Fitness Goal" options={fitnessGoalOptions}></Selector>
                     <Selector label="Weight" options={weightOptions}></Selector>
                     <AgeSlider></AgeSlider>
+                    <span className="saveContainer">
+                        <button onClick={() => console.log("hello")} className="saveButton">Save</button>
+                    </span>
 
-                    
                 </span>
+
             </ContentWrapper>
         </span>   
         </>
