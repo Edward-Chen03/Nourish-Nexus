@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-export default function HomePage() {
+export default function DummyPage1({userEmail, userName}) {
     let navigate = useNavigate();
+    console.log(userName);
+    
+    if(userName == ''){
+        navigate("/");
+    }
 
     let homePage = () => {
         navigate('/')
