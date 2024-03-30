@@ -7,10 +7,16 @@ export default function HomePage() {
         navigate('/')
     }
 
+    let testBack = () => {
+        
+    }
+
     return (
         <>
         
         <button onClick={homePage}> Test Home </button>
+
+        <button onClick = {testBack}>Test Backend</button>
 
         </>
         
