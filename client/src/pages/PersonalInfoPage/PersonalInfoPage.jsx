@@ -10,16 +10,17 @@ import axios from 'axios';
 
 export default function PersonalInfoPage() {
     const [goalChange, setGoalChange] = useState('');
-
-    const handleGoalChange = (goal) => {
-        setGoalChange(goal);
-        console.log("goal Changed")
-    };
+    const [weightChange, setWeightChange] = useState('');
+    const [ageChange, setAgeChange] = useState('');
+    const [genderChange, setGenderChange] = useState('');
 
     const updateChanges = async () => {
         await axios.post('http://localhost:3000/updatePersonalInformation', {
 
-            goal: goalChange
+            goal: goalChange,
+            weight: weightChange,
+            age: ageChange,
+            gender: genderChange
 
         }).then(
             //made create a popup to tell people that there information was updated
@@ -38,19 +39,18 @@ export default function PersonalInfoPage() {
                     <h1>PERSONAL INFORMATION</h1>
                     <BasicTextField label="First Name"></BasicTextField>
                     <BasicTextField label="Last Name"></BasicTextField>
-                    <Selector label="Gender" options={genderOptions}/>
-                    <Selector label="Fitness Goal" options={fitnessGoalOptions}></Selector>
-                    <Selector label="Weight" options={weightOptions}></Selector>
-                    <AgeSlider></AgeSlider>
+                    <Selector label="Gender" options={genderOptions} onSelect = {setGenderChange}/>
+                    <Selector label="Fitness Goal" options={fitnessGoalOptions} onSelect = {setGoalChange}></Selector>
+                    <Selector label="Weight" options={weightOptions} onSelect = {setWeightChange}></Selector>
+                    <AgeSlider onSelectAge={setAgeChange}></AgeSlider>
                     <span className="saveContainer">
-                        <button onClick={() => console.log("hello")} className="saveButton">Save</button>
+                        <button onClick={updateChanges} className="saveButton">Save</button>
                     </span>
 
                 </span>
 
             </ContentWrapper>
         </span>
-        <button onClick={updateChanges}>Save Changes</button>   
         </>
     )
 }
