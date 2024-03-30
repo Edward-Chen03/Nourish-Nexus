@@ -10,6 +10,7 @@ export default function BasicSelect({label, options}) {
 
   const handleChange = (event) => {
     setGoal(event.target.value);
+    onSelectGoal(event.target.value);
   };
 
   return (
