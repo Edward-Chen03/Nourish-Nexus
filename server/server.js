@@ -1,6 +1,8 @@
-import  OpenAI from "openai";
+
+const OpenAI = require('openai');
 
 // https://nourish-nexus.onrender.com/
+
 
 const express = require('express');
 const app = express();
@@ -17,13 +19,44 @@ app.listen(port, () => {
 
 const openai = new OpenAI();
 
-async function main() {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: "You are a helpful assistant." }],
-      model: "gpt-3.5-turbo",
-    });
-  
-    console.log(completion.choices[0]);
+let conversation =  [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in their kitchen and their fitness goals" },
+                  {role: "assistant", content: "I currently have no ingredients in my kitchen and no fitness goals"}]
+
+async function generateCompletion(conversation) {
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: conversation,
+        model: "gpt-3.5-turbo",
+      });
+      //handle completion
+      console.log(completion.choices[0]);
+    } catch (error) {
+      console.error("Error: " + error)
+    }
+    
   }
   
-main();
+  app.post('/updateIngredients', (req, res) => {
+    //request is an array of ingredients
+    update = "I now have these ingredients in my kitchen: "
+    for(ingredient in req.body.ingredients){
+      update = update + ingredient + ", ";
+    }
+    conversation.push(update);
+    res.send("ingredients have been updated");
+  })
+
+  app.post('/updateFitnessGoal', (req, res) => {
+    //request is an array of ingredients
+    update = "My fitness goal is now: " + req.body.goal;
+    conversation.push(update);
+    res.send("Fitness Goal has been updated");
+  })
+
+  app.get('/getNewRecipe', async (req, res) => {
+    completion = await generateCompletion(conversation);
+    res.send(completion.choices[0].message.content);
+  })
+
+
+
