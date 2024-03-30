@@ -36,6 +36,7 @@ db.on('connected', function () {
 
 })
 
+
 const openai = new OpenAI();
 
 let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me" },
@@ -58,11 +59,43 @@ async function generateCompletion(conversation) {
 
 }
 
-app.post('/addUser', (req, res) =>{
-  
-  console.log(req.body);
-  
+app.get('/users', async (req, res) =>{
+
+  let users = await Users.find({}).sort({name: 1});
+  res.send(users);
 })
+
+app.post('/addUser', async (req, res) => {
+
+  console.log(req.body);
+
+  const newUser = new Users({
+
+    email: req.body.email,
+    name: req.body.name
+
+  });
+
+  await newUser.save();
+  res.send("New User Created");
+
+});
+
+app.post('/login', async (req, res) =>{
+
+  const {email} = req.body;
+
+  console.log(req.body);
+
+  const user = await Users.findOne({email})
+
+  if(!user){
+    return res.status(401).send("Invalid");
+  }
+
+  res.send(user);
+
+});
 
 app.post('/updateIngredients', (req, res) => {
   //request is an array of ingredients
