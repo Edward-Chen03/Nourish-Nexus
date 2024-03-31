@@ -44,6 +44,15 @@ export default function Login({ setUserEmail, setUserName }) {
         setPasswordChange(value);
     }
 
+    const saveToLocalStorage = () => {
+        localStorage.setItem("firstname", firstChange);
+        localStorage.setItem("lastname", lastChange);
+        localStorage.setItem("fitnessgoal", goalChange);
+        localStorage.setItem("weight", weightChange);
+        localStorage.setItem("age", ageChange);
+        localStorage.setItem("gender", genderChange);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -57,6 +66,8 @@ export default function Login({ setUserEmail, setUserName }) {
             const response = await axios.post('http://localhost:3000/login', { email: emailChange, password: passwordChange });
 
             setUserEmail(emailChange);
+
+            saveToLocalStorage();
 
             HomePage(emailChange, response.data.name);
 
