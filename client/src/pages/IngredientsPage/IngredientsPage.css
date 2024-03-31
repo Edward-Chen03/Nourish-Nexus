@@ -1,7 +1,30 @@
 .IngredientsContent {
+    height: calc(100vh - 40px);
     margin: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 30px;
+    position: relative;
 }
+
+.createRecipeButtonContainer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.createRecipeButton {
+    justify-content: flex-start;
+    font-size: 24px;
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.createRecipeButton:active {
+    transform: scale(0.95); /* Button scale when pressed */
+};
