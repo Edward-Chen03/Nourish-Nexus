@@ -18,6 +18,7 @@ export default function HomePage() {
     console.log(emailChange);
 
     let email = decodeURIComponent(searchParams.get('email') || '');
+    let currentUser = decodeURIComponent(searchParams.get('user') || '');
     if(!emailChange){
         emailChange = email;
 
@@ -65,7 +66,7 @@ export default function HomePage() {
         <>
 
             <span style={{ display: "flex" }}>
-                <SideBar emailChange={emailChange} />
+                <SideBar emailChange={emailChange} currentUser = {currentUser} />
                 <ContentWrapper />
             </span>
 
