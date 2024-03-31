@@ -39,6 +39,23 @@ export default function Ingredients() {
 
     }, [])
 
+    const handleDelete = async (recipe) => {
+        try {
+            const response = await axios.delete('http://localhost:3000/deleteRecipe', {
+                data: { recipeIndex: recipe, user: email },
+            });
+            console.log("Recipe deleted successfully", response.data);
+
+            await axios.get('http://localhost:3000/recipes')
+            .then(res => { setRecipeList(res.data); })
+            .catch(err => console.error(err));
+          
+        } catch (error) {
+            console.error("Error deleting recipe:", error);
+        }
+    };
+    
+
     console.log(recipeList);
 
     const findUser = usersList.find(user => user.email == email);
@@ -67,9 +84,7 @@ export default function Ingredients() {
                             <tbody>
                                 {filteredRecipes.map((recipe, index) => (
                                     <tr key={index}>
-                                        <td className="deleteContainer">
-                                            <DeleteButton></DeleteButton>
-                                        </td>
+                                        <DeleteButton onClick={() => handleDelete(recipe)}></DeleteButton>
                                         <td>{recipe.name}</td>
                                         <td>{recipe.ingredients}</td>
                                         <td>{recipe.description}</td>
