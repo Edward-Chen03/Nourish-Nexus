@@ -39,11 +39,13 @@ db.on('connected', function () {
 
 const openai = new OpenAI();
 
-let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. Please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" },
-{ role: "assistant", content: "I currently have no ingredients in my kitchen and no fitness goals" }]
+let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. Please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" }  ];
+
+let personalInformation = {};
 
 async function generateCompletion(conversation) {
   try {
+    console.log(conversation)
     const completion = await openai.chat.completions.create({
       messages: conversation,
       model: "gpt-3.5-turbo",
@@ -111,7 +113,8 @@ app.post('/updateIngredients', (req, res) => {
   
   console.log(req.body.ingredients);
   const ingredients = req.body.ingredients;
-  update = "I now have these ingredients and only these ingredients in my kitchen: "
+  conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. Please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" }];
+  update = "I now have these ingredients and only these ingredients in my kitchen: ";
   for (let i = 0; i < ingredients.length; i++) {
     if (i == ingredients.length - 1) {
       update += ingredients[i].title
@@ -132,18 +135,20 @@ app.post('/updateIngredients', (req, res) => {
 
 app.post('/updatePersonalInformation', (req, res) => {
   update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight + " pounds.";
-  newConvoEntry = { role: "assistant", content: update };
-  conversation.push(newConvoEntry);
+  personalInformation = { role: "assistant", content: update };
   res.send("Fitness Goal has been updated");
 })
 
 app.get('/getNewRecipe', async (req, res) => {
 
   // add as recipe however need user
+  console.log(personalInformation);
+  conversation.push(personalInformation);
   completion = await generateCompletion(conversation);
   while(!completion.message.content.includes("Recipe") && !completion.message.content.includes("Ingredients") && !completion.message.content.includes("Instructions")){
     completion = await generateCompletion(conversation);
   }
+  console.log(conversation)
   console.log(completion);
   res.send(completion.message.content);
 

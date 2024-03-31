@@ -7,6 +7,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import {useState, useEffect} from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -19,8 +22,7 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-import {useState, useEffect} from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+
 
 
 export default function Ingredients() {
