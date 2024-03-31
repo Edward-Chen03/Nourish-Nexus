@@ -5,14 +5,30 @@ import BasicTextField from "../../components/BasicTextField/BasicTextField"
 import AgeSlider from "../../components/AgeSlider/AgeSlider"
 import "./PersonalInfoPage.css"
 import { Button } from "@mui/material"
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+
 
 export default function PersonalInfoPage() {
     const [goalChange, setGoalChange] = useState('');
     const [weightChange, setWeightChange] = useState('');
     const [ageChange, setAgeChange] = useState('');
     const [genderChange, setGenderChange] = useState('');
+
+    let [searchParams] = useSearchParams();
+    let navigate = useNavigate();
+
+
+    const email = decodeURIComponent(searchParams.get('email') || '');
+
+    console.log(email);
+
+    useEffect(() => {
+        if (!email) {
+            navigate('/'); 
+        }
+    }, [email, navigate]);
 
     const updateChanges = async () => {
         await axios.post('http://localhost:3000/updatePersonalInformation', {
@@ -33,7 +49,7 @@ export default function PersonalInfoPage() {
     return (
         <>
         <span style={{display: "flex"}}>
-            <SideBar></SideBar>
+            <SideBar email = {email}></SideBar>
             <ContentWrapper>
                 <span className="PersonalInformationContent">
                     <h1>PERSONAL INFORMATION</h1>
