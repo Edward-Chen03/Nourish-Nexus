@@ -39,15 +39,19 @@ db.on('connected', function () {
 
 const openai = new OpenAI();
 
-let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. Please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" },
-{ role: "assistant", content: "I currently have no ingredients in my kitchen and no fitness goals" }]
+let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. If there are not enough ingredients, say \' I need more Ingredients to create a meal for you \'. Otherwise, please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" }  ];
 
-async function generateCompletion(conversation) {
+let personalInformation = { role: "assistant", content: "I don't have any goals"};
+let ingredientsConvo = { role: "assistant", content: "I don't have any ingredients"};
+
+async function generateCompletion(convo) {
   try {
+    console.log(convo)
     const completion = await openai.chat.completions.create({
-      messages: conversation,
+      messages: convo,
       model: "gpt-3.5-turbo",
     });
+    conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. If there are not enough ingredients, say \' I need more Ingredients to create a meal for you \'. Otherwise, please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" }  ];
     //handle completion
     console.log(completion.choices[0]);
 
@@ -112,9 +116,9 @@ app.post('/login', async (req, res) =>{
 
 app.post('/updateIngredients', (req, res) => {
   
-  console.log(req.body.ingredients);
+  console.log("i here bitch");
   const ingredients = req.body.ingredients;
-  update = "I now have these ingredients and only these ingredients in my kitchen: "
+  update = "I now have these ingredients and only these ingredients in my kitchen: ";
   for (let i = 0; i < ingredients.length; i++) {
     if (i == ingredients.length - 1) {
       update += ingredients[i].title
@@ -123,31 +127,31 @@ app.post('/updateIngredients', (req, res) => {
       update += ingredients[i].title + ", ";
     }
   }
-  update += ". Please forget ingredients I may have had before."
 
 
 
-  console.log(update);
-  newConvoEntry = { role: "assistant", content: update };
-  conversation.push(newConvoEntry);
+  //console.log(update);
+  ingredientsConvo = { role: "assistant", content: update };
   res.send("ingredients have been updated");
 })
 
 app.post('/updatePersonalInformation', (req, res) => {
   update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight + " pounds.";
-  newConvoEntry = { role: "assistant", content: update };
-  conversation.push(newConvoEntry);
+  personalInformation = { role: "assistant", content: update };
+  
   res.send("Fitness Goal has been updated");
 })
 
 app.get('/getNewRecipe', async (req, res) => {
 
   // add as recipe however need user
+  conversation.push(personalInformation);
+  conversation.push(ingredientsConvo);
   completion = await generateCompletion(conversation);
-  while(!completion.message.content.includes("Recipe") && !completion.message.content.includes("Ingredients") && !completion.message.content.includes("Instructions")){
-    completion = await generateCompletion(conversation);
-  }
-  console.log(completion);
+  // while(!completion.message.content.includes("Recipe") && !completion.message.content.includes("Ingredients") && !completion.message.content.includes("Instructions")){
+  //   completion = await generateCompletion(conversation);
+  // }
+
   res.send(completion.message.content);
 
 })
