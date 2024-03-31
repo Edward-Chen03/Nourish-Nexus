@@ -207,6 +207,34 @@ app.post('/saveRecipe', async (req, res) => {
 
 });
 
+app.delete('/deleteRecipe', async (req, res) => {
+  try {
+  
+    const email = req.body.user;
+    const recipeName = req.body.recipeIndex.name;
+
+    let findUser = await Users.findOne({ email });
+
+    console.log(recipeName);
+    console.log(findUser);
+    
+    const result = await recipeList.deleteOne({ user: findUser._id, name: recipeName });
+
+    if (result.deletedCount === 0) {
+      
+      return res.status(401).send('Recipe not found.');
+    }
+
+
+    res.send('Recipe deleted successfully.');
+
+
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    res.status(401).send('Error deleting recipe.');
+  }
+});
+
 app.put('/changeUser', async (req, res) => {
 
 
