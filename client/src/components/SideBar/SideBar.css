@@ -1,6 +1,6 @@
 .sideBarContainer {
     height: 100vh;
-    border-right: 1px solid black;
+    border-right: 0px solid black;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -24,7 +24,7 @@
 
 .listItem {
     color: var(--text-color);
-    font-size: large;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    font-family: 'Archivo Black', serif;
     margin-bottom: 10px; /* Add spacing between list items */
 };
