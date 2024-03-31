@@ -214,8 +214,8 @@ export default function Login({ setUserEmail, setUserName }) {
                             </span>
                             <span className="emptySpace"></span>
                             <span className="loginAlert">
-                                    <ErrorAlert label={alertLabel} open={alert} setOpen={setAlert}></ErrorAlert>
-                                </span>
+                                <ErrorAlert label={alertLabel} open={alert} setOpen={setAlert}></ErrorAlert>
+                            </span>
                         </span>
                     </span>
 
