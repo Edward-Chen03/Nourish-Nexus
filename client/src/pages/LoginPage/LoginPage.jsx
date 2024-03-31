@@ -18,6 +18,7 @@ export default function Login({ setUserEmail, setUserName }) {
     const [ageChange, setAgeChange] = useState('');
     const [genderChange, setGenderChange] = useState('');
     const [emailChange, setEmailChange] = useState('');
+    const [passwordChange, setPasswordChange] = useState('');
     const [firstChange, setFirstChange] = useState('');
     const [lastChange, setLastChange] = useState('');
 
@@ -39,7 +40,9 @@ export default function Login({ setUserEmail, setUserName }) {
         setEmailChange(value);
     }
 
-    
+    const handlePasswordChange = (value) => {
+        setPasswordChange(value);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +54,7 @@ export default function Login({ setUserEmail, setUserName }) {
 
         try {
 
-            const response = await axios.post('http://localhost:3000/login', { email: emailChange });
+            const response = await axios.post('http://localhost:3000/login', { email: emailChange, password: passwordChange });
 
             setUserEmail(emailChange);
         
@@ -62,7 +65,7 @@ export default function Login({ setUserEmail, setUserName }) {
 
             if (error.response && error.response.status == 401) {
 
-                setLogin('Create');
+                document.getElementById('CheckingInvalidLogin').innerHTML = 'Incorrect Login!';
             }
             else {
                 
@@ -79,16 +82,29 @@ export default function Login({ setUserEmail, setUserName }) {
 
     }
 
+    const handleTransferToCreateSubmit = async (e) => {
+
+        setLogin('Create');
+
+    }
+
+    const handleTransferToSubmit = async (e) => {
+
+        setLogin('Login');
+
+    }
+
     const handleCreateSubmit = async (e) => {
         e.preventDefault();
 
         const email = emailChange;
-        let username = firstChange + lastChange
+        let username = firstChange + " " + lastChange
 
         const newUser = await axios.post('http://localhost:3000/addUser', {
 
             email: email,
             name: username,
+            password: passwordChange,
             gender: genderChange,
             fitness: goalChange,
             weight: weightChange,
@@ -115,12 +131,15 @@ export default function Login({ setUserEmail, setUserName }) {
                         <span className="logoContainer">
                             <img className="logo" src={logo}/>
                             <h1 className="welcome">Welcome to Nourish Nexus</h1>
-                            <h2 className="welcome">Enter your email to create an account!</h2>
+                            <h2 className="welcome">Login</h2>
                             <div className="info1">
                                 <BasicTextField label="Email" value = {emailChange} onChange = {handleEmailChange}></BasicTextField>
+                                <BasicTextField label="Password" type = "password" value = {passwordChange} onChange = {handlePasswordChange}></BasicTextField>
                             </div>
                             <span className="nextButtonContainer">
-                                <button onClick={handleSubmit} className="nextButton">Sign In/Sign up</button>
+                                <p id = "CheckingInvalidLogin"></p>
+                                <button onClick={handleSubmit} className="nextButton">Sign In </button>
+                                <button onClick={handleTransferToCreateSubmit} className="nextButton">Click Here to Sign Up </button>
                             </span>
                         </span>
                     </span>
@@ -140,6 +159,12 @@ export default function Login({ setUserEmail, setUserName }) {
                                 <BasicTextField label="Last Name" onChange={setLastChange}></BasicTextField>
                             </span>
                             <span className="info2">
+                                <BasicTextField label="Email" value = {emailChange} onChange={handleEmailChange}></BasicTextField>
+                            </span>
+                            <span className="info2">
+                                <BasicTextField label="Password" type = "password" onChange={handlePasswordChange}></BasicTextField>
+                            </span>
+                            <span className="info2">
                                 <Selector label="Gender" options={genderOptions} onSelect = {setGenderChange}/>
                             </span>
                             <span className="info2">
@@ -153,6 +178,7 @@ export default function Login({ setUserEmail, setUserName }) {
                             </span>
                             <span className="nextButtonContainer">
                                 <button onClick={handleCreateSubmit} className="nextButton">Sign up</button>
+                                <button onClick={handleTransferToSubmit} className="nextButton">Already Have An Account? Sign in</button>
                             </span>
                             <span   className="emptySpace"></span>
                         </span>
