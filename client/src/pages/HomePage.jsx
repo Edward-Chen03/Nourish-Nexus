@@ -12,11 +12,16 @@ export default function HomePage() {
 
     useEffect(() => {
         if (!email) {
-            navigate('/'); 
+        //    navigate('/'); 
         }
     }, [email, navigate]);
     
     console.log(email);
+
+    const page1 = () => {
+        navigate('/DummyPage1')
+    }
+
 
 
     return (
@@ -25,6 +30,8 @@ export default function HomePage() {
             <SideBar/>
             <ContentWrapper/>
             </span>
+
+            <button onClick={page1}> Test </button>
         </>
     );
 }
