@@ -48,9 +48,10 @@ export default function HomePage() {
                 console.error(err);
             }
 
-            fetchData();
-
         }
+
+        fetchData();
+        
     }, [emailChange, navigate]);
 
 
