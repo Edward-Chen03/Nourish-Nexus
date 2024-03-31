@@ -83,7 +83,7 @@ export default function Login({ setUserEmail, setUserName }) {
 
                 console.error(error);
                 setAlert(true);
-                alertLabel("Incorrect Login!");
+                setAlertLabel("Incorrect Login!");
             }
 
         }
