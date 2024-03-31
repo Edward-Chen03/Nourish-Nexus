@@ -7,6 +7,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import {useState, useEffect} from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Loading from "../../components/Loading/Loading"
 
 const style = {
@@ -20,8 +23,7 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-import {useState, useEffect} from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+
 
 
 export default function Ingredients() {
@@ -52,7 +54,7 @@ export default function Ingredients() {
     };
 
     const recipeCreate = async () => {
-        axios.post('http://localhost:3000/updateIngredients', {
+        await axios.post('http://localhost:3000/updateIngredients', {
             ingredients: ingredientList
         });
         console.log("Ingredients added");
