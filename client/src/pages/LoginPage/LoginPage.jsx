@@ -30,7 +30,7 @@ export default function Login({ setUserEmail, setUserName }) {
     let navigate = useNavigate();
 
     const HomePage = (email, username) => {
-        navigate('/home', { state: { email, username } })
+        navigate('/home', { state: { emailChange, username } })
     }
 
     const handleEmailChange = (value) => {
