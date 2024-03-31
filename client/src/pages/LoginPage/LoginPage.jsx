@@ -102,7 +102,7 @@ export default function Login({ setUserEmail, setUserName }) {
         setUserName(username);
 
 
-        HomePage(email, username);
+        HomePage(emailChange, username);
     }
 
 
