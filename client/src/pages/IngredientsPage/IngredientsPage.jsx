@@ -54,7 +54,7 @@ export default function Ingredients() {
     };
 
     const recipeCreate = async () => {
-        axios.post('http://localhost:3000/updateIngredients', {
+        await axios.post('http://localhost:3000/updateIngredients', {
             ingredients: ingredientList
         });
         console.log("Ingredients added");
