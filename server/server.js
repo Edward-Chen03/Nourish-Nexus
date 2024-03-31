@@ -26,8 +26,8 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-let Users = require('./models/users');
-let IngredientsList = require('./models/ingredients');
+let Users = require('./models/users.js');
+let recipeList = require('./models/recipe.js');
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.on('connected', function () {
@@ -36,9 +36,10 @@ db.on('connected', function () {
 
 })
 
+
 const openai = new OpenAI();
 
-let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me" },
+let conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. Please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" },
 { role: "assistant", content: "I currently have no ingredients in my kitchen and no fitness goals" }]
 
 async function generateCompletion(conversation) {
@@ -58,14 +59,56 @@ async function generateCompletion(conversation) {
 
 }
 
-app.post('/addUser', (req, res) =>{
-  
-  console.log(req.body);
-  
+app.get('/users', async (req, res) =>{
+
+  let users = await Users.find({}).sort({name: 1});
+  res.send(users);
+
+
 })
 
+app.get('/recipes', async (req, res) =>{
+
+  let recipes = await recipeList.find({}).sort({name: 1});
+  res.send(recipes);
+
+
+})
+
+app.post('/addUser', async (req, res) => {
+
+  console.log(req.body);
+
+  const newUser = new Users({
+
+    email: req.body.email,
+    name: req.body.name
+
+  });
+
+  await newUser.save();
+  res.send("New User Created");
+
+});
+
+app.post('/login', async (req, res) =>{
+
+  const {email} = req.body;
+
+  console.log(req.body);
+
+  const user = await Users.findOne({email})
+
+  if(!user){
+    return res.status(401).send("Invalid");
+  }
+
+  res.send(user);
+
+});
+
 app.post('/updateIngredients', (req, res) => {
-  //request is an array of ingredients
+  
   console.log(req.body.ingredients);
   const ingredients = req.body.ingredients;
   update = "I now have these ingredients and only these ingredients in my kitchen: "
@@ -88,7 +131,6 @@ app.post('/updateIngredients', (req, res) => {
 })
 
 app.post('/updatePersonalInformation', (req, res) => {
-  //request is an array of ingredients
   update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight + " pounds.";
   newConvoEntry = { role: "assistant", content: update };
   conversation.push(newConvoEntry);
@@ -97,10 +139,38 @@ app.post('/updatePersonalInformation', (req, res) => {
 
 app.get('/getNewRecipe', async (req, res) => {
 
+  // add as recipe however need user
   completion = await generateCompletion(conversation);
+  while(!completion.message.content.includes("Recipe") && !completion.message.content.includes("Ingredients") && !completion.message.content.includes("Instructions")){
+    completion = await generateCompletion(conversation);
+  }
   console.log(completion);
   res.send(completion.message.content);
+
 })
+
+app.post('/saveRecipe', async (req, res) =>{
+
+    let email = req.body.user;
+
+    let findUser = await Users.findOne({email});  
+
+    const newRecipe = new recipeList({
+
+      user: findUser,
+      name: req.body.name,
+      ingredients: req.body.ingredients,
+      description: req.body.description
+
+    });
+
+    await newRecipe.save();
+
+    console.log(newRecipe);
+
+    res.send("New Recipe Saved!")
+
+});
 
 
 
