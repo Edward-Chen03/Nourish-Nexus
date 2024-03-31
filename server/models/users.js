@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     email: {type: String},
-    name: {type: String}
+    name: {type: String},
+    
 });
 
 userSchema.virtual('url').get(function(){

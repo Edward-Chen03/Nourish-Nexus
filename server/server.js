@@ -95,7 +95,7 @@ app.post('/login', async (req, res) =>{
 
   const {email} = req.body;
 
-  console.log(req.body);
+  console.log(email);
 
   const user = await Users.findOne({email})
 
