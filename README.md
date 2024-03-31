@@ -6,7 +6,7 @@ https://nourish-nexus.onrender.com
 
 ## Features
 - User Account
-- OpenAI API
+- OpenAI API Interactive
 - Recipe Manager
   
 ## Instructions
@@ -19,6 +19,7 @@ If you would like to deploy locally, please download and run npm install in both
 - Javascript/CSS
 - MongoDB Atlas
 - OpenAI API
+- Material UI
 
 
 
