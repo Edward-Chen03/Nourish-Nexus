@@ -9,7 +9,7 @@ import logo from '/NourishNexus.jpg'
 
 export default function Login({ setUserEmail, setUserName }) {
 
-    const [Login, setLogin] = useState('Create');
+    const [Login, setLogin] = useState('Login');
     const fitnessGoalOptions = ["Gain Weight", "Lose Weight", "Grow Muscle", "Maintain Weight"]
     const genderOptions = ["Male", "Female"]
     const weightOptions = ["< 100", "< 150", "< 200", "< 250", "< 300", "> 350" ]
@@ -17,6 +17,7 @@ export default function Login({ setUserEmail, setUserName }) {
     const [weightChange, setWeightChange] = useState('');
     const [ageChange, setAgeChange] = useState('');
     const [genderChange, setGenderChange] = useState('');
+    const [emailChange, setEmailChange] = useState('');
 
 
     let [usersList, setUsersList] = useState([]);
@@ -32,27 +33,34 @@ export default function Login({ setUserEmail, setUserName }) {
         navigate('/home', { state: { email, username } })
     }
 
+    const handleEmailChange = (value) => {
+        setEmailChange(value);
+    }
+
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const email = e.target.email.value;
+            
+
+        console.log(emailChange);
         
 
         try {
 
-            const response = await axios.post('http://localhost:3000/login', { email });
+            const response = await axios.post('http://localhost:3000/login', { email: emailChange });
 
-            setUserEmail(email);
+            setUserEmail(emailChange);
         
-
-            HomePage(email, response.data.name);
+            HomePage(emailChange, response.data.name);
 
         }
         catch (error) {
 
             if (error.response && error.response.status == 401) {
 
-                document.getElementById('CheckingInvalidLogin').innerHTML = 'No Login Found!';
+                setLogin('Create');
             }
             else {
                 
@@ -89,6 +97,21 @@ export default function Login({ setUserEmail, setUserName }) {
         setUserEmail(email);
         setUserName(username);
 
+
+        const updateChanges = async () => {
+            await axios.post('http://localhost:3000/updatePersonalInformation', {
+    
+                goal: goalChange,
+                weight: weightChange,
+                age: ageChange,
+                gender: genderChange
+    
+            }).then(
+                //made create a popup to tell people that there information was updated
+                console.log("Settings have been updated")
+            );
+        }
+
         HomePage(email, username);
     }
 
@@ -111,10 +134,10 @@ export default function Login({ setUserEmail, setUserName }) {
                             <h1 className="welcome">Welcome to Nourish Nexus</h1>
                             <h2 className="welcome">Enter your email to create an account!</h2>
                             <div className="info1">
-                                <BasicTextField label="Email"></BasicTextField>
+                                <BasicTextField label="Email" value = {emailChange} onChange = {handleEmailChange} ></BasicTextField>
                             </div>
                             <span className="nextButtonContainer">
-                                <button onClick={handleSubmit} className="nextButton">Sign up</button>
+                                <button onClick={handleSubmit} className="nextButton">Sign In/Sign up</button>
                             </span>
                         </span>
                     </span>

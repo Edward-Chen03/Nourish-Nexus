@@ -2,11 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-export default function BasicTextField ({label, required, conditional}) {
+export default function BasicTextField ({label, required, onChange}) {
 
     const [value, setValue] = React.useState("");
 
     const handleChange = (event) => {
+        onChange(event.target.value)
         setValue(event.target.value)
     }
 
