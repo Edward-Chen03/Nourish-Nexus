@@ -34,6 +34,10 @@ export default function Ingredients() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [recipe, setRecipe] = React.useState('')
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [recipeTitle, setRecipeTitle] = React.useState('');
+    const [recipeIng, setRecipeIng] = React.useState('');
+    const [toDo, setToDo] = React.useState('');
 
     let [searchParams] = useSearchParams();
     let navigate = useNavigate();
@@ -53,16 +57,56 @@ export default function Ingredients() {
         setShowChip(false);
     };
 
+    const splitRecipe = (recipeToSplit) => {
+        const recipeIndex = recipeToSplit.indexOf('Recipe:');
+        const ingredientsIndex = recipeToSplit.indexOf('Ingredients:');
+        const instructionsIndex = recipeToSplit.indexOf('Instructions:');
+    
+        if (recipeIndex !== -1 && ingredientsIndex !== -1 && instructionsIndex !== -1) {
+            const recipeTitle = recipeToSplit.substring(recipeIndex + 'Recipe:'.length, ingredientsIndex).trim();
+            const recipeIng = recipeToSplit.substring(ingredientsIndex + 'Ingredients:'.length, instructionsIndex).trim();
+            const toDo = recipeToSplit.substring(instructionsIndex + 'Instructions:'.length).trim();
+            
+            setRecipeTitle(recipeTitle);
+            setRecipeIng(recipeIng);
+            setToDo(toDo);
+        } else {
+            // Handle case where one of the headings is missing
+            console.error('One or more headings missing in the recipe');
+        }
+    };
+
     const recipeCreate = async () => {
+        setIsLoading(true);
         await axios.post('http://localhost:3000/updateIngredients', {
             ingredients: ingredientList
         });
         console.log("Ingredients added");
         const newRecipe = await axios.get('http://localhost:3000/getNewRecipe');
-        setRecipe(newRecipe.data);
         console.log(newRecipe);
+        if (!newRecipe.data.includes("I need")) {
+            splitRecipe(newRecipe.data); // Pass newRecipe.data directly
+        } else {
+            setToDo("Insufficient Information");
+            setRecipeIng("Insufficient Information");
+            setRecipeTitle("Insufficient Information");
+        }
+        setRecipe(newRecipe.data); // Update state after splitting
+        setIsLoading(false);
         setOpen(true);
     };
+
+    const saveRecipe = async () => {
+        axios.post('http://localhost:3000/saveRecipe', {
+            user: email,
+            name: recipeTitle,
+            ingredients: recipeIng,
+            description: toDo
+
+        });
+        console.log("saved recipe");
+        setOpen(false);
+    }
 
     return(
         <>
@@ -71,7 +115,7 @@ export default function Ingredients() {
             <ContentWrapper>
                 <span className="IngredientsContent">
                     <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
-                    <Loading></Loading>
+                    {isLoading && <Loading></Loading>}
                     <span className='createRecipeButtonContainer'>
                         <button onClick={recipeCreate} className='createRecipeButton'>Create Recipe</button>
                     </span>
@@ -87,9 +131,23 @@ export default function Ingredients() {
         >
         <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-                New Recipe!
+                {recipeTitle}
             </Typography>
-            <div>{recipe}</div>
+            <div>
+                <Typography variant="body1" component="p">
+                    <strong>Ingredients:</strong>
+                </Typography>
+                {recipeIng}
+            </div>
+            <div>
+                <Typography variant="body1" component="p">
+                    <strong>Instructions:</strong>
+                </Typography>
+                {toDo}
+            </div>
+            {recipeTitle !== "Insufficient Information" && (
+    <button onClick={saveRecipe}>Save Recipe</button>
+)}
             </Box>
         </Modal>
         </>
