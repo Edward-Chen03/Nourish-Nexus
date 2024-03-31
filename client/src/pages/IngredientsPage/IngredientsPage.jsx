@@ -86,11 +86,11 @@ export default function Ingredients() {
 
     const recipeCreate = async () => {
         setIsLoading(true);
-        await axios.post('http://localhost:3000/updateIngredients', {
+        await axios.post('https://nourish-nexus-server.onrender.com/updateIngredients', {
             ingredients: ingredientList
         });
         console.log("Ingredients added");
-        const newRecipe = await axios.get('http://localhost:3000/getNewRecipe');
+        const newRecipe = await axios.get('https://nourish-nexus-server.onrender.com/getNewRecipe');
         console.log(newRecipe);
         if (!newRecipe.data.includes("I need")) {
             splitRecipe(newRecipe.data); // Pass newRecipe.data directly
@@ -105,7 +105,7 @@ export default function Ingredients() {
     };
 
     const saveRecipe = async () => {
-        axios.post('http://localhost:3000/saveRecipe', {
+        axios.post('https://nourish-nexus-server.onrender.com/saveRecipe', {
             user: email,
             name: recipeTitle,
             ingredients: recipeIng,

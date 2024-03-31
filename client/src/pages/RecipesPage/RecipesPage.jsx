@@ -12,7 +12,7 @@ export default function Ingredients() {
 
     let [usersList, setUsersList] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:3000/users')
+        axios.get('https://nourish-nexus-server.onrender.com/users')
             .then(res => { setUsersList(res.data); })
             .catch(err => console.error(err));
     }, []);
@@ -34,7 +34,7 @@ export default function Ingredients() {
 
     useEffect(() => {
 
-        axios.get('http://localhost:3000/recipes')
+        axios.get('https://nourish-nexus-server.onrender.com/recipes')
             .then(res => { setRecipeList(res.data); })
             .catch(err => console.error(err));
 
@@ -42,12 +42,12 @@ export default function Ingredients() {
 
     const handleDelete = async (recipe) => {
         try {
-            const response = await axios.delete('http://localhost:3000/deleteRecipe', {
+            const response = await axios.delete('https://nourish-nexus-server.onrender.com/deleteRecipe', {
                 data: { recipeIndex: recipe, user: email },
             });
             console.log("Recipe deleted successfully", response.data);
 
-            await axios.get('http://localhost:3000/recipes')
+            await axios.get('https://nourish-nexus-server.onrender.com/recipes')
             .then(res => { setRecipeList(res.data); })
             .catch(err => console.error(err));
           

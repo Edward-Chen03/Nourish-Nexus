@@ -68,7 +68,7 @@ export default function PersonalInfoPage() {
     }, [openModal])
 
     const updateChanges = async () => {
-        await axios.post('http://localhost:3000/updatePersonalInformation', {
+        await axios.post('https://nourish-nexus-server.onrender.com/updatePersonalInformation', {
 
             goal: goalChange,
             weight: weightChange,
