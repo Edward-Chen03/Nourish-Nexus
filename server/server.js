@@ -46,7 +46,7 @@ let ingredientsConvo = { role: "assistant", content: "I don't have any ingredien
 
 async function generateCompletion(convo) {
   try {
-    console.log(convo)
+    
     const completion = await openai.chat.completions.create({
       messages: convo,
       model: "gpt-3.5-turbo",
