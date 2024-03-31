@@ -34,6 +34,7 @@ export default function Ingredients() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [recipe, setRecipe] = React.useState('')
+    const [isLoading, setIsLoading] = React.useState(false);
 
     let [searchParams] = useSearchParams();
     let navigate = useNavigate();
@@ -54,6 +55,7 @@ export default function Ingredients() {
     };
 
     const recipeCreate = async () => {
+        setIsLoading(true);
         await axios.post('http://localhost:3000/updateIngredients', {
             ingredients: ingredientList
         });
@@ -61,6 +63,7 @@ export default function Ingredients() {
         const newRecipe = await axios.get('http://localhost:3000/getNewRecipe');
         setRecipe(newRecipe.data);
         console.log(newRecipe);
+        setIsLoading(false);
         setOpen(true);
     };
 
@@ -71,7 +74,7 @@ export default function Ingredients() {
             <ContentWrapper>
                 <span className="IngredientsContent">
                     <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
-                    <Loading></Loading>
+                    {isLoading && <Loading></Loading>}
                     <span className='createRecipeButtonContainer'>
                         <button onClick={recipeCreate} className='createRecipeButton'>Create Recipe</button>
                     </span>
