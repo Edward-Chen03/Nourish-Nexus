@@ -3,11 +3,11 @@ import Avatar from '@mui/material/Avatar';
 import "./SideBar.css";
 import defaultPFP from '/default_pfp.jpg'
 
-export default function SideBar({ email }) {
+export default function SideBar({ emailChange }) {
 
-    console.log(email);
+    console.log(emailChange);
 
-    const encodedVar = encodeURIComponent(email);
+    const encodedVar = encodeURIComponent(emailChange);
 
     return (
         <>

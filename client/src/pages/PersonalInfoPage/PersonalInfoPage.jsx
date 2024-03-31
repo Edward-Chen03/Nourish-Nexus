@@ -49,7 +49,7 @@ export default function PersonalInfoPage() {
     return (
         <>
         <span style={{display: "flex"}}>
-            <SideBar email = {email}></SideBar>
+            <SideBar emailChange = {email}></SideBar>
             <ContentWrapper>
                 <span className="PersonalInformationContent">
                     <h1>PERSONAL INFORMATION</h1>

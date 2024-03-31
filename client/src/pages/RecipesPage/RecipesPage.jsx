@@ -48,7 +48,7 @@ export default function Ingredients() {
     return (
         <>
             <span style={{ display: "flex" }}>
-                <SideBar email={email}></SideBar>
+                <SideBar emailChange ={email}></SideBar>
                 <ContentWrapper>
                     <span className="PersonalInformationContent">
                         <h1>YOUR RECIPES</h1>

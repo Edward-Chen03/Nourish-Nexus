@@ -3,9 +3,6 @@ import SideBar from "../../components/SideBar/SideBar"
 import ContentWrapper from "../../components/ContentWrapper/ContentWrapper"
 import IngredientSearch from "../../components/IngredientSearch/IngredientSearch"
 import './IngredientsPage.css'
-
-import IngredientChip from "../../components/IngredientChip/IngredientChip"
-import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -67,7 +64,7 @@ export default function Ingredients() {
     return(
         <>
         <span style={{display: "flex"}}>
-            <SideBar email = {email}></SideBar>
+            <SideBar emailChange = {email}></SideBar>
             <ContentWrapper>
                 <span className="IngredientsContent">
                     <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
