@@ -4,56 +4,61 @@ import ContentWrapper from "../../components/ContentWrapper/ContentWrapper";
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 export default function HomePage() {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const { emailChange, username } = location.state || {};
+    let [searchParams] = useSearchParams();
+    let { emailChange, username } = location.state || {};
     let [usersList, setUsersList] = useState([]);
 
 
     console.log(emailChange);
 
-    useEffect(() => {
+    let email = decodeURIComponent(searchParams.get('email') || '');
+    if(!emailChange){
+        emailChange = email;
 
+        console.log(emailChange);
+    }
+    useEffect(() => {
         async function fetchData() {
-            if (!emailChange) {
+            if (!emailChange && !email) {
                 navigate('/');
                 return;
             }
-
+    
             try {
-                const res = axios.get('http://localhost:3000/users')
-                    .then(res => { setUsersList(res.data); })
-                    .catch(err => console.error(err));
+                const response = await axios.get('http://localhost:3000/users');
+                setUsersList(response.data);
 
-                let findUser = usersList.find(user => user.email === emailChange);
-
+                const findUser = response.data.find(user => user.email === emailChange);
                 console.log(findUser);
-
-                axios.post('http://localhost:3000/updatePersonalInformation', {
-
-                    goal: findUser.fitness,
-                    weight: findUser.weight,
-                    age: findUser.age,
-                    gender: findUser.gender
-
-                }).then(
-
-                    console.log("Settings have been updated")
-                );
-
+    
+                if (findUser) {
+                    
+                    await axios.post('http://localhost:3000/updatePersonalInformation', {
+                        goal: findUser.fitness,
+                        weight: findUser.weight,
+                        age: findUser.age,
+                        gender: findUser.gender
+                    });
+    
+                    console.log("Settings have been updated");
+                } else {
+                    console.log("User not found");
+                }
+    
             } catch (err) {
                 console.error(err);
             }
-
         }
-
+    
         fetchData();
-        
     }, [emailChange, navigate]);
-
+    
 
 
     return (
