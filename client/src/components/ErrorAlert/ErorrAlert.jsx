@@ -1,12 +1,10 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import * as React from 'react';;
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
-import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function TransitionAlerts({label, open, setOpen}) {
+export default function ErrorAlert({label, open, setOpen}) {
 
   return (
       <Collapse in={open}>
@@ -24,6 +22,7 @@ export default function TransitionAlerts({label, open, setOpen}) {
             </IconButton>
           }
           sx={{ mb: 2 }}
+          severity= "error"
         >
           {label}
         </Alert>

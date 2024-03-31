@@ -123,7 +123,7 @@ export default function Ingredients() {
             <SideBar emailChange = {email} currentUser = {currentUser}></SideBar>
             <ContentWrapper>
                 <span className='alert'>
-                    <TransitionAlerts label={recipeTitle} open={showAlert} setOpen={setShowAlert}></TransitionAlerts>
+                    <TransitionAlerts label={recipeTitle + " has been saved!"} open={showAlert} setOpen={setShowAlert}></TransitionAlerts>
                 </span>
                 <span className="IngredientsContent">
                     <h1>INGREDIENTS</h1>

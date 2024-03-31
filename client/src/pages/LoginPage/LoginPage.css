@@ -23,6 +23,17 @@
     
 }
 
+.loginAlert {
+    position: fixed;
+    top: 0px; /* Adjust as needed */
+    right: 0px; /* Adjust as needed */
+    color: #333; /* Text color */
+    padding: 10px; /* Padding around the content */
+    z-index: 1000;
+    transform: scale(2);
+    transform-origin: top right;
+
+}
 .nextButton {
     font-size: 24px;
     width: 75%;
