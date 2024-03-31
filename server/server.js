@@ -81,8 +81,6 @@ app.get('/recipes', async (req, res) => {
 
 app.post('/addUser', async (req, res) => {
 
-  console.log(req.body);
-
   let password = req.body.password;
 
   bcrypt.hash(password, 10, async (err, hash) => {
@@ -90,7 +88,6 @@ app.post('/addUser', async (req, res) => {
       console.log(err);
     }
     else {
-      console.log(hash);
 
       const newUser = new Users({
 
@@ -130,8 +127,6 @@ app.post('/login', async (req, res) => {
     userPassword = user.password;
     checkPassword = await bcrypt.compare(req.body.password, userPassword);
   }
-
-  console.log(checkPassword);
 
   if (!checkPassword) {
     return res.status(401).send("Invalid");
