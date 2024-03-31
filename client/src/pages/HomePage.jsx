@@ -12,7 +12,7 @@ export default function HomePage() {
 
     useEffect(() => {
         if (!email) {
-        //    navigate('/'); 
+            navigate('/'); 
         }
     }, [email, navigate]);
     
@@ -27,7 +27,7 @@ export default function HomePage() {
     return (
         <>
         <span style={{display: "flex"}}>
-            <SideBar/>
+            <SideBar email = {email} />
             <ContentWrapper/>
             </span>
 

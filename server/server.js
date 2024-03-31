@@ -67,6 +67,14 @@ app.get('/users', async (req, res) =>{
 
 })
 
+app.get('/recipes', async (req, res) =>{
+
+  let recipes = await recipeList.find({}).sort({name: 1});
+  res.send(recipes);
+
+
+})
+
 app.post('/addUser', async (req, res) => {
 
   console.log(req.body);
