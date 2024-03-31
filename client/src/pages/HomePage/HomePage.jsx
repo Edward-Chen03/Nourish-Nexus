@@ -5,6 +5,8 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import { Typography } from "@mui/material";
+import './HomePage.css'
 
 export default function HomePage() {
 
@@ -68,15 +70,21 @@ export default function HomePage() {
             <span style={{ display: "flex" }}>
                 <SideBar emailChange={emailChange} currentUser = {currentUser} />
                 <ContentWrapper>
-                
-                <h1>Welcome to Nourish Nexus</h1>
+                    <span className="HomePageContent">
+                        <Typography variant="h1" className="titleFont">Welcome to</Typography>
+                        <Typography variant="h1" gutterBottom className="headingFont">Nourish Nexus</Typography>
+                        <Typography variant="p">We are an innovative web application where culinary aspirations meet fitness 
+                        objectives in the most personalized manner. At the heart of our service lies a simple yet profound 
+                        belief: everyone deserves to enjoy meals that not only delight the palate but also align perfectly 
+                        with their health and fitness goals. Nourish Nexus is more than just a recipe site; 
+                        it's your personal chef and health manager, all rolled into one seamless experience.
 
-                <p> We are a innovative web application where culinary aspirations meet fitness objectives in the most personalized manner. At the heart of our service lies a simple yet profound belief: everyone deserves to enjoy meals that not only delight the palate but also align perfectly with their health and fitness goals. Nourish Nexus is more than just a recipe site; it's your personal chef and health manager, all rolled into one seamless experience.
-
-Using cutting-edge technology, Nourish Nexus takes the guesswork out of meal planning. By understanding your unique fitness targets and scrutinizing the ingredients you have on hand, we craft delicious, nutritious recipes tailored just for you. Whether you're looking to lose weight, gain muscle, maintain a balanced diet, or simply make the most of what’s in your pantry, Nourish Nexus is your go-to companion.</p>
-
-
-
+                        Using cutting-edge technology, Nourish Nexus takes the guesswork out of meal planning. By 
+                        understanding your unique fitness targets and scrutinizing the ingredients you have on hand, 
+                        we craft delicious, nutritious recipes tailored just for you. Whether you're looking to lose weight, 
+                        gain muscle, maintain a balanced diet, or simply make the most of what’s in your pantry, Nourish Nexus
+                        is your go-to companion.</Typography>
+                    </span>
                 </ContentWrapper>
             </span>
 
