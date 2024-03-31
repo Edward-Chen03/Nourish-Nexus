@@ -85,7 +85,9 @@ export default function Ingredients() {
                             <tbody>
                                 {filteredRecipes.map((recipe, index) => (
                                     <tr key={index}>
-                                        <DeleteButton onClick={() => handleDelete(recipe)}></DeleteButton>
+                                        <td className="deleteContainer">
+                                            <DeleteButton onClick={() => handleDelete(recipe)}></DeleteButton>
+                                        </td>
                                         <td>{recipe.name}</td>
                                         <td>{recipe.ingredients}</td>
                                         <td>{recipe.description}</td>
