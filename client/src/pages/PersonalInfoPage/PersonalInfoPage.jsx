@@ -11,6 +11,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 
 
 export default function PersonalInfoPage() {
+    const [firstChange, setFirstChange] = useState('');
+    const [lastChange, setLastChange] = useState('');
     const [goalChange, setGoalChange] = useState('');
     const [weightChange, setWeightChange] = useState('');
     const [ageChange, setAgeChange] = useState('');
@@ -53,8 +55,8 @@ export default function PersonalInfoPage() {
             <ContentWrapper>
                 <span className="PersonalInformationContent">
                     <h1>PERSONAL INFORMATION</h1>
-                    <BasicTextField label="First Name"></BasicTextField>
-                    <BasicTextField label="Last Name"></BasicTextField>
+                    <BasicTextField label="First Name" onChange={setFirstChange}></BasicTextField>
+                    <BasicTextField label="Last Name" onChange={setLastChange}></BasicTextField>
                     <Selector label="Gender" options={genderOptions} onSelect = {setGenderChange}/>
                     <Selector label="Fitness Goal" options={fitnessGoalOptions} onSelect = {setGoalChange}></Selector>
                     <Selector label="Weight" options={weightOptions} onSelect = {setWeightChange}></Selector>

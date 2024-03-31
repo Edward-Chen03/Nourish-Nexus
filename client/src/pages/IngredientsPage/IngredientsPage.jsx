@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Loading from "../../components/Loading/Loading"
 
 const style = {
     position: 'absolute',
@@ -71,9 +72,11 @@ export default function Ingredients() {
             <ContentWrapper>
                 <span className="IngredientsContent">
                     <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
-                    <button onClick={recipeCreate}>Create Recipe</button>
+                    <Loading></Loading>
+                    <span className='createRecipeButtonContainer'>
+                        <button onClick={recipeCreate} className='createRecipeButton'>Create Recipe</button>
+                    </span>
                 </span>
-
             </ContentWrapper>
         </span>
         <Modal
