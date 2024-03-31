@@ -65,7 +65,8 @@ async function generateCompletion(convo) {
 
 app.get('/users', async (req, res) => {
 
-  let users = await Users.find({}).sort({ name: 1 });
+  let users = await Users.find({}).sort({});
+
   res.send(users);
 
 
@@ -82,6 +83,11 @@ app.get('/recipes', async (req, res) => {
 app.post('/addUser', async (req, res) => {
 
   let password = req.body.password;
+
+  if (!req.body.email || !req.body.password || !req.body.gender || !req.body.fitness || !req.body.weight || !req.body.age) {
+    return res.status(401).send("Invalid");
+  }
+
 
   bcrypt.hash(password, 10, async (err, hash) => {
     if (err) {
@@ -120,10 +126,10 @@ app.post('/login', async (req, res) => {
   let userPassword;
   let checkPassword;
 
-  if(!user){  
+  if (!user) {
     userPassword = null;
     return res.status(401).send("Invalid");
-  }else{
+  } else {
     userPassword = user.password;
     checkPassword = await bcrypt.compare(req.body.password, userPassword);
   }
