@@ -6,6 +6,7 @@ import axios from 'axios';
 import './LoginPage.css'
 import BasicTextField from '../../components/BasicTextField/BasicTextField'
 import logo from '/NourishNexus.jpg'
+import ErrorAlert from '../../components/ErrorAlert/ErorrAlert'
 
 export default function Login({ setUserEmail, setUserName }) {
 
@@ -21,6 +22,8 @@ export default function Login({ setUserEmail, setUserName }) {
     const [passwordChange, setPasswordChange] = useState('');
     const [firstChange, setFirstChange] = useState('');
     const [lastChange, setLastChange] = useState('');
+    const [alert, setAlert] = useState(false);
+    const [alertLabel, setAlertLabel] = useState("");
 
 
     let [usersList, setUsersList] = useState([]);
@@ -67,22 +70,20 @@ export default function Login({ setUserEmail, setUserName }) {
 
             setUserEmail(emailChange);
 
-            saveToLocalStorage();
-
             HomePage(emailChange, response.data.name);
 
         }
         catch (error) {
 
             if (error.response && error.response.status == 401) {
-
-                document.getElementById('CheckingInvalidLogin').innerHTML = 'Incorrect Login!';
+                setAlert(true);   
+                alertLabel("Incorrect Login!");
             }
             else {
 
                 console.error(error);
-
-                document.getElementById('CheckingInvalidLogin').innerHTML = 'Error!';
+                setAlert(true);
+                alertLabel("Incorrect Login!");
             }
 
         }
@@ -128,20 +129,21 @@ export default function Login({ setUserEmail, setUserName }) {
             setUserEmail(email);
             setUserName(username);
 
+            saveToLocalStorage();
 
             HomePage(emailChange, username);
         }
         catch (error) {
 
             if (error.response && error.response.status == 401) {
-
-                document.getElementById('CheckingInvalidSign').innerHTML = 'Insufficient Parameters';
+                setAlert(true);
+                setAlertLabel("Sign Up Failed");
             }
             else {
 
                 console.error(error);
-
-                document.getElementById('CheckingInvalidSign').innerHTML = 'Error!';
+                setAlert(true);
+                setAlertLabel("Sign Up Failed");
             }
         }
     }
@@ -162,7 +164,11 @@ export default function Login({ setUserEmail, setUserName }) {
                                 <BasicTextField label="Password" type="password" value={passwordChange} onChange={handlePasswordChange}></BasicTextField>
                             </div>
                             <span className="nextButtonContainer">
-                                <p id="CheckingInvalidLogin"></p>
+                                <span className="loginAlert">
+                                    <ErrorAlert label={alertLabel} open={alert} setOpen={setAlert}></ErrorAlert>
+                                </span>
+                                
+                                {/* <p id="CheckingInvalidLogin"></p> */}
                                 <button onClick={handleSubmit} className="nextButton">Sign In </button>
                                 <button onClick={handleTransferToCreateSubmit} className="nextButton">Click Here to Sign Up </button>
                             </span>
@@ -207,6 +213,9 @@ export default function Login({ setUserEmail, setUserName }) {
                                 <button onClick={handleTransferToSubmit} className="nextButton">Already Have An Account? Sign in</button>
                             </span>
                             <span className="emptySpace"></span>
+                            <span className="loginAlert">
+                                    <ErrorAlert label={alertLabel} open={alert} setOpen={setAlert}></ErrorAlert>
+                                </span>
                         </span>
                     </span>
 
