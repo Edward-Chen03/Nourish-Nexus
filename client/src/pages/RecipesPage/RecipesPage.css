@@ -1,0 +1,7 @@
+.deleteContainer {
+    height: 100%;
+}
+
+th {
+    white-space: nowrap; /* Prevent text from wrapping */
+};
