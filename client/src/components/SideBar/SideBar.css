@@ -23,8 +23,14 @@
 }
 
 .listItem {
+    width: fit-content;
     color: var(--text-color);
     font-size: larger;
     font-family: 'Archivo Black', serif;
     margin-bottom: 10px; /* Add spacing between list items */
+}
+
+a:hover {
+    text-decoration: none;
+    background-color: white;
 };
