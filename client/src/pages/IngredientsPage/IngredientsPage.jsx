@@ -46,6 +46,7 @@ export default function Ingredients() {
 
 
     const email = decodeURIComponent(searchParams.get('email') || '');
+    let currentUser = decodeURIComponent(searchParams.get('user') || '');
 
     console.log(email);
 
@@ -114,7 +115,7 @@ export default function Ingredients() {
     return(
         <>
         <span style={{display: "flex"}}>
-            <SideBar emailChange = {email}></SideBar>
+            <SideBar emailChange = {email} currentUser = {currentUser}></SideBar>
             <ContentWrapper>
                 <span className='alert'>
                     <TransitionAlerts label={recipeTitle} open={showAlert} setOpen={setShowAlert}></TransitionAlerts>
