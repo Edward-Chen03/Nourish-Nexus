@@ -27,12 +27,18 @@ export default function PersonalInfoPage() {
         p: 4,
     };
 
-    const [firstChange, setFirstChange] = useState('');
-    const [lastChange, setLastChange] = useState('');
-    const [goalChange, setGoalChange] = useState('');
-    const [weightChange, setWeightChange] = useState('');
-    const [ageChange, setAgeChange] = useState('');
-    const [genderChange, setGenderChange] = useState('');
+    const setUseState = (key) => {
+        const storedValue = localStorage.getItem(key);
+        console.log(key, ": ", storedValue);
+        return storedValue !== null ? (storedValue) : "";
+    }
+
+    const [firstChange, setFirstChange] = useState(setUseState("firstname"))
+    const [lastChange, setLastChange] = useState(setUseState("lastname"));
+    const [goalChange, setGoalChange] = useState(setUseState("fitnessgoal"));
+    const [weightChange, setWeightChange] = useState(setUseState("weight"));
+    const [ageChange, setAgeChange] = useState(setUseState("age"));
+    const [genderChange, setGenderChange] = useState(setUseState("gender"));
     const [openModal, setOpenModal] = useState(false);
     const handleOpen = () => setOpenModal(true);
     const handleClose = () => setOpenModal(false);
@@ -50,6 +56,15 @@ export default function PersonalInfoPage() {
             navigate('/'); 
         }
     }, [email, navigate]);
+
+    useEffect(() => {
+        localStorage.setItem("firstname", firstChange);
+        localStorage.setItem("lastname", lastChange);
+        localStorage.setItem("fitnessgoal", goalChange);
+        localStorage.setItem("weight", weightChange);
+        localStorage.setItem("age", ageChange);
+        localStorage.setItem("gender", genderChange);
+    }, [openModal])
 
     const updateChanges = async () => {
         await axios.post('http://localhost:3000/updatePersonalInformation', {
@@ -74,12 +89,12 @@ export default function PersonalInfoPage() {
             <ContentWrapper>
                 <span className="PersonalInformationContent">
                     <h1>PERSONAL INFORMATION</h1>
-                    <BasicTextField label="First Name" onChange={setFirstChange}></BasicTextField>
-                    <BasicTextField label="Last Name" onChange={setLastChange}></BasicTextField>
-                    <Selector label="Gender" options={genderOptions} onSelect = {setGenderChange}/>
-                    <Selector label="Fitness Goal" options={fitnessGoalOptions} onSelect = {setGoalChange}></Selector>
-                    <Selector label="Weight" options={weightOptions} onSelect = {setWeightChange}></Selector>
-                    <AgeSlider onSelectAge={setAgeChange}></AgeSlider>
+                    <BasicTextField label="First Name" onChange={setFirstChange} defaultValue={firstChange}></BasicTextField>
+                    <BasicTextField label="Last Name" onChange={setLastChange} defaultValue={lastChange}></BasicTextField>
+                    <Selector label="Gender" options={genderOptions} onSelect = {setGenderChange} defaultValue={genderChange}/>
+                    <Selector label="Fitness Goal" options={fitnessGoalOptions} onSelect = {setGoalChange} defaultValue={goalChange}></Selector>
+                    <Selector label="Weight" options={weightOptions} onSelect = {setWeightChange} defaultValue={weightChange}></Selector>
+                    <AgeSlider onSelectAge={setAgeChange} defaultValue={ageChange}></AgeSlider>
                     <span className="saveContainer">
                         <button onClick={updateChanges} className="saveButton">Save</button>
                     </span>

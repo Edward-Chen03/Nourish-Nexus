@@ -2,9 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-export default function BasicTextField ({label, required, onChange, type}) {
+export default function BasicTextField ({label, required, onChange, type, defaultValue}) {
 
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = React.useState(defaultValue ? defaultValue : "");
 
     const handleChange = (event) => {
         onChange(event.target.value)
