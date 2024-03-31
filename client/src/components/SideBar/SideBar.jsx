@@ -2,6 +2,8 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import "./SideBar.css";
 import defaultPFP from '/default_pfp.jpg'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { IconButton } from '@mui/material';
 
 export default function SideBar({ emailChange }) {
 
@@ -14,11 +16,14 @@ export default function SideBar({ emailChange }) {
             <span className="sideBarContainer">
                 {/*Profile Picture */}
                 <span className="profilePicture">
-                    <Avatar sx={{ width: 100, height: 100 }} src={defaultPFP}></Avatar>
+                    <IconButton>
+                        <AccountCircleIcon sx={{width: 200, height: 200}}></AccountCircleIcon>
+                    </IconButton>
+
                 </span>
                 <span className="itemList">
                     <a className='listItem' href={`/PersonalInformation?email=${encodedVar}`}>
-                        <span className='rubik-scribble-regular'>PERSONAL INFORMATION</span>
+                        PERSONAL INFORMATION
                     </a>
 
                     <a className='listItem' href={`/Ingredients?email=${encodedVar}`}>
@@ -28,9 +33,7 @@ export default function SideBar({ emailChange }) {
                     <a className='listItem' href={`/Recipes?email=${encodedVar}`}>
                         RECIPES
                     </a>
-                </span>
-
-
+                </span> 
             </span>
 
 
