@@ -3,14 +3,40 @@ import SideBar from "../../components/SideBar/SideBar"
 import ContentWrapper from "../../components/ContentWrapper/ContentWrapper"
 import IngredientSearch from "../../components/IngredientSearch/IngredientSearch"
 import './IngredientsPage.css'
+
+import IngredientChip from "../../components/IngredientChip/IngredientChip"
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 import IngredientChip from "../../components/IngredientChip/IngredientChip";
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
+
 export default function Ingredients() {
 
     const [showChip, setShowChip] = React.useState(true);
+    const [ingredientList, setIngredientList] = React.useState([]);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [recipe, setRecipe] = React.useState('')
 
     let [searchParams] = useSearchParams();
     let navigate = useNavigate();
@@ -30,17 +56,43 @@ export default function Ingredients() {
         setShowChip(false);
     };
 
+    const recipeCreate = async () => {
+        axios.post('http://localhost:3000/updateIngredients', {
+            ingredients: ingredientList
+        });
+        console.log("Ingredients added");
+        const newRecipe = await axios.get('http://localhost:3000/getNewRecipe');
+        setRecipe(newRecipe.data);
+        console.log(newRecipe);
+        setOpen(true);
+    };
+
     return(
         <>
         <span style={{display: "flex"}}>
             <SideBar email = {email}></SideBar>
             <ContentWrapper>
                 <span className="IngredientsContent">
-                    <IngredientSearch></IngredientSearch>
+                    <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
+                    <button onClick={recipeCreate}>Create Recipe</button>
                 </span>
 
             </ContentWrapper>
         </span>
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            className='recipeModal'
+        >
+        <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+                New Recipe!
+            </Typography>
+            <div>{recipe}</div>
+            </Box>
+        </Modal>
         </>
     )
 };
