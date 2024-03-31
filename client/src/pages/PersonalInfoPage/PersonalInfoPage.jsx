@@ -48,6 +48,7 @@ export default function PersonalInfoPage() {
 
 
     const email = decodeURIComponent(searchParams.get('email') || '');
+    let currentUser = decodeURIComponent(searchParams.get('user') || '');
 
     console.log(email);
 
@@ -85,7 +86,7 @@ export default function PersonalInfoPage() {
     return (
         <>
         <span style={{display: "flex"}}>
-            <SideBar emailChange = {email}></SideBar>
+            <SideBar emailChange = {email} currentUser = {currentUser}></SideBar>
             <ContentWrapper>
                 <span className="PersonalInformationContent">
                     <h1>PERSONAL INFORMATION</h1>
