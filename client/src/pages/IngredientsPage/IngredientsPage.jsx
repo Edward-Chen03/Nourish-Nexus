@@ -96,6 +96,18 @@ export default function Ingredients() {
         setOpen(true);
     };
 
+    const saveRecipe = async () => {
+        axios.post('http://localhost:3000/saveRecipe', {
+            user: email,
+            name: recipeTitle,
+            ingredients: recipeIng,
+            description: toDo
+
+        });
+        console.log("saved recipe");
+        setOpen(false);
+    }
+
     return(
         <>
         <span style={{display: "flex"}}>
@@ -133,6 +145,9 @@ export default function Ingredients() {
                 </Typography>
                 {toDo}
             </div>
+            {recipeTitle !== "Insufficient Information" && (
+    <button onClick={saveRecipe}>Save Recipe</button>
+)}
             </Box>
         </Modal>
         </>
