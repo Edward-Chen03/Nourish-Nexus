@@ -25,7 +25,7 @@ export default function Login({ setUserEmail, setUserName }) {
 
     let [usersList, setUsersList] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:3000/users')
+        axios.get('https://nourish-nexus-server.onrender.com/users')
             .then(res => { setUsersList(res.data); })
             .catch(err => console.error(err));
     }, []);
@@ -63,7 +63,7 @@ export default function Login({ setUserEmail, setUserName }) {
 
         try {
 
-            const response = await axios.post('http://localhost:3000/login', { email: emailChange, password: passwordChange });
+            const response = await axios.post('https://nourish-nexus-server.onrender.com/login', { email: emailChange, password: passwordChange });
 
             setUserEmail(emailChange);
 
@@ -111,7 +111,7 @@ export default function Login({ setUserEmail, setUserName }) {
         const email = emailChange;
         let username = firstChange + " " + lastChange
         try {
-            const newUser = await axios.post('http://localhost:3000/addUser', {
+            const newUser = await axios.post('https://nourish-nexus-server.onrender.com/addUser', {
 
                 email: email,
                 name: username,

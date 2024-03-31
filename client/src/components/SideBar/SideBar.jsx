@@ -15,7 +15,7 @@ export default function SideBar({ emailChange, currentUser }) {
     const encodedVar = encodeURIComponent(emailChange);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/users')
+        axios.get('https://nourish-nexus-server.onrender.com/users')
             .then(res => { setUsersList(res.data); })
             .catch(err => console.error(err));
     }, []);
