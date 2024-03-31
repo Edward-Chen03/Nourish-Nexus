@@ -1,5 +1,5 @@
 .IngredientsContent {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 30px);
     margin: 20px;
     display: flex;
     flex-direction: column;

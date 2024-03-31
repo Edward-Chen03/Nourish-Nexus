@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import "./SideBar.css";
-import defaultPFP from '/default_pfp.jpg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 
 export default function SideBar({ emailChange }) {
@@ -22,6 +21,9 @@ export default function SideBar({ emailChange }) {
 
                 </span>
                 <span className="itemList">
+                    <a className='listItem' href={`/Home?email=${encodedVar}`}>
+                        HOME
+                    </a>
                     <a className='listItem' href={`/PersonalInformation?email=${encodedVar}`}>
                         PERSONAL INFORMATION
                     </a>

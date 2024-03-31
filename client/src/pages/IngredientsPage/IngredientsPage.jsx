@@ -68,6 +68,7 @@ export default function Ingredients() {
             <SideBar emailChange = {email}></SideBar>
             <ContentWrapper>
                 <span className="IngredientsContent">
+                    <h1>INGREDIENTS</h1>
                     <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
                     <Loading></Loading>
                     <span className='createRecipeButtonContainer'>
