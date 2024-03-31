@@ -29,9 +29,14 @@ const style = {
 
 export default function Ingredients() {
 
+    const getValIfLS = () => {
+        const storedValue = localStorage.getItem('items');
+        return storedValue !== null ? JSON.parse(storedValue) : [];
+      }
+
     const [showChip, setShowChip] = React.useState(true);
     const [showAlert, setShowAlert] = React.useState(false);
-    const [ingredientList, setIngredientList] = React.useState([]);
+    const [ingredientList, setIngredientList] = React.useState(getValIfLS());
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

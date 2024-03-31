@@ -5,8 +5,24 @@ import IngredientChip from '../IngredientChip/IngredientChip';
 import { debounce } from 'lodash';
 
 export default function IngredientSearch({ onSelectedIngredients }) {
-  const [selectedValues, setSelectedValues] = useState([]);
+  
+  const getValIfLS = () => {
+    const storedValue = localStorage.getItem('items');
+    return storedValue !== null ? JSON.parse(storedValue) : [];
+  }
+
+  const addToLS = () => {
+    localStorage.setItem('items', JSON.stringify(selectedValues));
+  }
+
+  const [selectedValues, setSelectedValues] = useState(getValIfLS());
   const [options, setOptions] = useState([]);
+
+  console.log(selectedValues);
+
+  React.useEffect(() => {
+    addToLS();
+  }, [selectedValues])
 
   const handleOnChange = (event, value) => {
     if (value && !selectedValues.some(item => item.title === value.title)) {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import DeleteButton from "../../components/DeleteButton/DeleteButton";
+import './RecipesPage.css'
 
 export default function Ingredients() {
 
@@ -57,6 +58,7 @@ export default function Ingredients() {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Delete </th>
                                     <th>Recipe Name</th>
                                     <th>Ingredients</th>
                                     <th>Description</th>
@@ -65,7 +67,9 @@ export default function Ingredients() {
                             <tbody>
                                 {filteredRecipes.map((recipe, index) => (
                                     <tr key={index}>
-                                        <DeleteButton></DeleteButton>
+                                        <td className="deleteContainer">
+                                            <DeleteButton></DeleteButton>
+                                        </td>
                                         <td>{recipe.name}</td>
                                         <td>{recipe.ingredients}</td>
                                         <td>{recipe.description}</td>
