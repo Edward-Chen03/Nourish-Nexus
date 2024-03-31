@@ -4,13 +4,14 @@ import Autocomplete from '@mui/material/Autocomplete';
 import IngredientChip from '../IngredientChip/IngredientChip';
 import { debounce } from 'lodash';
 
-export default function IngredientSearch() {
+export default function IngredientSearch({ onSelectedIngredients }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [options, setOptions] = useState([]);
 
   const handleOnChange = (event, value) => {
     if (value && !selectedValues.some(item => item.title === value.title)) {
       setSelectedValues([...selectedValues, value]);
+      onSelectedIngredients([...selectedValues, value]);
     }
   };
 

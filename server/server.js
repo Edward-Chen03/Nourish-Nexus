@@ -95,7 +95,7 @@ app.post('/login', async (req, res) =>{
 
   const {email} = req.body;
 
-  console.log(req.body);
+  console.log(email);
 
   const user = await Users.findOne({email})
 
@@ -111,15 +111,16 @@ app.post('/updateIngredients', (req, res) => {
   
   console.log(req.body.ingredients);
   const ingredients = req.body.ingredients;
-  update = "I now have these ingredients in my kitchen: "
+  update = "I now have these ingredients and only these ingredients in my kitchen: "
   for (let i = 0; i < ingredients.length; i++) {
     if (i == ingredients.length - 1) {
-      update += ingredients[i]
+      update += ingredients[i].title
     }
     else {
-      update += ingredients[i] + ", ";
+      update += ingredients[i].title + ", ";
     }
   }
+  update += ". Please forget ingredients I may have had before."
 
 
 
@@ -131,8 +132,8 @@ app.post('/updateIngredients', (req, res) => {
 
 app.post('/updatePersonalInformation', (req, res) => {
   update = "My fitness goal is now: " + req.body.goal + ". My age is now: " + req.body.age + ". My gender is now: " + req.body.gender + ". My weight range is now: " + req.body.weight + " pounds.";
-  console.log(update);
-  conversation.push(update);
+  newConvoEntry = { role: "assistant", content: update };
+  conversation.push(newConvoEntry);
   res.send("Fitness Goal has been updated");
 })
 
