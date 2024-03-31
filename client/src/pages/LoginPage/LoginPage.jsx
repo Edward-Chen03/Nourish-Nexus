@@ -18,6 +18,8 @@ export default function Login({ setUserEmail, setUserName }) {
     const [ageChange, setAgeChange] = useState('');
     const [genderChange, setGenderChange] = useState('');
     const [emailChange, setEmailChange] = useState('');
+    const [firstChange, setFirstChange] = useState('');
+    const [lastChange, setLastChange] = useState('');
 
 
     let [usersList, setUsersList] = useState([]);
@@ -80,15 +82,17 @@ export default function Login({ setUserEmail, setUserName }) {
     const handleCreateSubmit = async (e) => {
         e.preventDefault();
 
-        const email = e.target.email.value;
-        const username = e.target.name.value;
-
-        console.log(username);
+        const email = emailChange;
+        let username = firstChange + lastChange
 
         const newUser = await axios.post('http://localhost:3000/addUser', {
 
             email: email,
-            name: username
+            name: username,
+            gender: genderChange,
+            fitness: goalChange,
+            weight: weightChange,
+            age: ageChange
 
         })
 
@@ -98,30 +102,9 @@ export default function Login({ setUserEmail, setUserName }) {
         setUserName(username);
 
 
-        const updateChanges = async () => {
-            await axios.post('http://localhost:3000/updatePersonalInformation', {
-    
-                goal: goalChange,
-                weight: weightChange,
-                age: ageChange,
-                gender: genderChange
-    
-            }).then(
-                //made create a popup to tell people that there information was updated
-                console.log("Settings have been updated")
-            );
-        }
-
         HomePage(email, username);
     }
 
-    const setCreatePage = () => {
-        setLogin('Create');
-    }
-
-    const setLoginPage = () => {
-        setLogin('Login');
-    }
 
     switch (Login) {
 
@@ -134,7 +117,7 @@ export default function Login({ setUserEmail, setUserName }) {
                             <h1 className="welcome">Welcome to Nourish Nexus</h1>
                             <h2 className="welcome">Enter your email to create an account!</h2>
                             <div className="info1">
-                                <BasicTextField label="Email" value = {emailChange} onChange = {handleEmailChange} ></BasicTextField>
+                                <BasicTextField label="Email" value = {emailChange} onChange = {handleEmailChange}></BasicTextField>
                             </div>
                             <span className="nextButtonContainer">
                                 <button onClick={handleSubmit} className="nextButton">Sign In/Sign up</button>
@@ -151,10 +134,10 @@ export default function Login({ setUserEmail, setUserName }) {
                             <img className="logo" src={logo}/>
                             <h1 className="welcome">Fill out your information to receive your Personalized Plan</h1>
                             <span className="info2">
-                                <BasicTextField label="First Name"></BasicTextField>
+                                <BasicTextField label="First Name" onChange={setFirstChange}></BasicTextField>
                             </span>
                             <span className="info2">
-                                <BasicTextField label="Last Name"></BasicTextField>
+                                <BasicTextField label="Last Name" onChange={setLastChange}></BasicTextField>
                             </span>
                             <span className="info2">
                                 <Selector label="Gender" options={genderOptions} onSelect = {setGenderChange}/>
@@ -169,7 +152,7 @@ export default function Login({ setUserEmail, setUserName }) {
                                 <AgeSlider onSelectAge={setAgeChange}></AgeSlider>
                             </span>
                             <span className="nextButtonContainer">
-                                <button onClick={handleSubmit} className="nextButton">Sign up</button>
+                                <button onClick={handleCreateSubmit} className="nextButton">Sign up</button>
                             </span>
                             <span   className="emptySpace"></span>
                         </span>
