@@ -1,5 +1,5 @@
 .IngredientsContent {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 30px);
     margin: 20px;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,34 @@
 .createRecipeButtonContainer {
     position: absolute;
     bottom: 0;
+    margin-bottom: 10px;
     width: 100%;
+}
+
+.alert {
+    position: fixed;
+    top: 0px; /* Adjust as needed */
+    right: 0px; /* Adjust as needed */
+    color: #333; /* Text color */
+    padding: 10px; /* Padding around the content */
+    z-index: 1000;
+}
+
+.saveRecipe {
+    width: fit-content;
+    font-size: 24px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.saveRecipe:active {
+    transform: scale(0.95); /* Button scale when pressed */
 }
 
 .createRecipeButton {
