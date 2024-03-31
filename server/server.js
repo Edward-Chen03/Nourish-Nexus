@@ -82,7 +82,10 @@ app.post('/addUser', async (req, res) => {
   const newUser = new Users({
 
     email: req.body.email,
-    name: req.body.name
+    name: req.body.name,
+    gender: req.body.gender,
+    fitness: req.body.fitness,
+    weight: req.body.weight
 
   });
 
@@ -172,6 +175,10 @@ app.post('/saveRecipe', async (req, res) =>{
 
 });
 
+app.put('/changeUser', async (req, res) =>{
+
+
+})
 
 
 
