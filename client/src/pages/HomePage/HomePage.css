@@ -5,3 +5,12 @@
     justify-content: center;
     gap: 30px;
 }
+
+.titleFont {
+    font-family: "Archivo Black", serif;
+}
+
+.headingFont {
+    font-family: "Raleway", serif;
+    text-decoration: underline;
+}
