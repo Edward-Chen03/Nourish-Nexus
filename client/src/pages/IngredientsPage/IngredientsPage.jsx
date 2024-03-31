@@ -11,6 +11,7 @@ import {useState, useEffect} from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from "../../components/Loading/Loading"
+import TransitionAlerts from '../../components/TransitionAlerts/TransitionAlerts';
 
 const style = {
     position: 'absolute',
@@ -29,6 +30,7 @@ const style = {
 export default function Ingredients() {
 
     const [showChip, setShowChip] = React.useState(true);
+    const [showAlert, setShowAlert] = React.useState(false);
     const [ingredientList, setIngredientList] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -106,6 +108,7 @@ export default function Ingredients() {
         });
         console.log("saved recipe");
         setOpen(false);
+        setShowAlert(true);
     }
 
     return(
@@ -113,7 +116,11 @@ export default function Ingredients() {
         <span style={{display: "flex"}}>
             <SideBar emailChange = {email}></SideBar>
             <ContentWrapper>
+                <span className='alert'>
+                    <TransitionAlerts label={recipeTitle} open={showAlert} setOpen={setShowAlert}></TransitionAlerts>
+                </span>
                 <span className="IngredientsContent">
+                    <h1>INGREDIENTS</h1>
                     <IngredientSearch onSelectedIngredients={setIngredientList}></IngredientSearch>
                     {isLoading && <Loading></Loading>}
                     <span className='createRecipeButtonContainer'>
@@ -130,7 +137,7 @@ export default function Ingredients() {
             className='recipeModal'
         >
         <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography id="modal-modal-title" variant="h4" component="h1">
                 {recipeTitle}
             </Typography>
             <div>
@@ -146,7 +153,7 @@ export default function Ingredients() {
                 {toDo}
             </div>
             {recipeTitle !== "Insufficient Information" && (
-    <button onClick={saveRecipe}>Save Recipe</button>
+    <button onClick={saveRecipe} className='saveRecipe'>Save Recipe</button>
 )}
             </Box>
         </Modal>
