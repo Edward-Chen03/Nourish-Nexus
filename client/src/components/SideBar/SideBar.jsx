@@ -37,11 +37,9 @@ export default function SideBar({ emailChange, currentUser }) {
                 <span className="profilePicture">
                     <IconButton>
                         <AccountCircleIcon sx={{width: 200, height: 200}}></AccountCircleIcon>
-                    </IconButton>
-
-                    <p>{findUser.name}</p>
-
+                    </IconButton>   
                 </span>
+                <p className='userName'>{findUser.name}</p>
                 <span className="itemList">
                     <a className='listItem' href={`/Home?email=${encodedVar}&user=${encodedUser}`}>
                         HOME
