@@ -27,4 +27,4 @@
 
 .saveButton:active {
     transform: scale(0.95); /* Button scale when pressed */
-};
+}
