@@ -18,8 +18,6 @@ export default function IngredientSearch({ onSelectedIngredients }) {
   const [selectedValues, setSelectedValues] = useState(getValIfLS());
   const [options, setOptions] = useState([]);
 
-  console.log(selectedValues);
-
   React.useEffect(() => {
     addToLS();
   }, [selectedValues])

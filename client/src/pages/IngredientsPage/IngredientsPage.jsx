@@ -53,8 +53,6 @@ export default function Ingredients() {
     const email = decodeURIComponent(searchParams.get('email') || '');
     let currentUser = decodeURIComponent(searchParams.get('user') || '');
 
-    console.log(email);
-
     useEffect(() => {
         if (!email) {
             navigate('/'); 
@@ -89,9 +87,9 @@ export default function Ingredients() {
         await axios.post('https://nourish-nexus-server.onrender.com/updateIngredients', {
             ingredients: ingredientList
         });
-        console.log("Ingredients added");
+
         const newRecipe = await axios.get('https://nourish-nexus-server.onrender.com/getNewRecipe');
-        console.log(newRecipe);
+
         if (!newRecipe.data.includes("I need")) {
             splitRecipe(newRecipe.data); // Pass newRecipe.data directly
         } else {
@@ -112,7 +110,7 @@ export default function Ingredients() {
             description: toDo
 
         });
-        console.log("saved recipe");
+      
         setOpen(false);
         setShowAlert(true);
     }

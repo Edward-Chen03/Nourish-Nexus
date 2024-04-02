@@ -60,10 +60,6 @@ export default function Login({ setUserEmail, setUserName }) {
         e.preventDefault();
 
 
-
-        console.log(emailChange);
-
-
         try {
 
             const response = await axios.post('https://nourish-nexus-server.onrender.com/login', { email: emailChange, password: passwordChange });
@@ -123,8 +119,6 @@ export default function Login({ setUserEmail, setUserName }) {
                 age: ageChange
 
             });
-
-            console.log(newUser);
 
             setUserEmail(email);
             setUserName(username);

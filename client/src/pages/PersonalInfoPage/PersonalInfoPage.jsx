@@ -29,7 +29,6 @@ export default function PersonalInfoPage() {
 
     const setUseState = (key) => {
         const storedValue = localStorage.getItem(key);
-        console.log(key, ": ", storedValue);
         return storedValue !== null ? (storedValue) : "";
     }
 
@@ -50,7 +49,6 @@ export default function PersonalInfoPage() {
     const email = decodeURIComponent(searchParams.get('email') || '');
     let currentUser = decodeURIComponent(searchParams.get('user') || '');
 
-    console.log(email);
 
     useEffect(() => {
         if (!email) {

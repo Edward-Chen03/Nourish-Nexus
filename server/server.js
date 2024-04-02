@@ -53,7 +53,6 @@ async function generateCompletion(convo) {
     });
     conversation = [{ role: "system", content: "You are a chef creating recipes for me based only on the ingredients in my kitchen and my personal information to fit my goals and make a healthy meal for me. If there are not enough ingredients, say \' I need more Ingredients to create a meal for you \'. Otherwise, please follow the format of displaying the recipe's name with Recipe:, then the ingredients with Ingredients: and then the Instructions with Instructions:" }];
     //handle completion
-    console.log(completion.choices[0]);
 
     return completion.choices[0]
 
@@ -119,8 +118,6 @@ app.post('/login', async (req, res) => {
 
   const { email } = req.body;
 
-  console.log(email);
-
   const user = await Users.findOne({ email });
 
   let userPassword;
@@ -157,8 +154,6 @@ app.post('/updateIngredients', (req, res) => {
   }
 
 
-
-  //console.log(update);
   ingredientsConvo = { role: "assistant", content: update };
   res.send("ingredients have been updated");
 })
@@ -201,8 +196,6 @@ app.post('/saveRecipe', async (req, res) => {
 
   await newRecipe.save();
 
-  console.log(newRecipe);
-
   res.send("New Recipe Saved!")
 
 });
@@ -215,9 +208,6 @@ app.delete('/deleteRecipe', async (req, res) => {
 
     let findUser = await Users.findOne({ email });
 
-    console.log(recipeName);
-    console.log(findUser);
-    
     const result = await recipeList.deleteOne({ user: findUser._id, name: recipeName });
 
     if (result.deletedCount === 0) {

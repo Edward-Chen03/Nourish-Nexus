@@ -24,7 +24,6 @@ export default function Ingredients() {
     const email = decodeURIComponent(searchParams.get('email') || '');
     let currentUser = decodeURIComponent(searchParams.get('user') || '');
 
-    console.log(email);
 
     useEffect(() => {
         if (!email) {
@@ -45,7 +44,7 @@ export default function Ingredients() {
             const response = await axios.delete('https://nourish-nexus-server.onrender.com/deleteRecipe', {
                 data: { recipeIndex: recipe, user: email },
             });
-            console.log("Recipe deleted successfully", response.data);
+          
 
             await axios.get('https://nourish-nexus-server.onrender.com/recipes')
             .then(res => { setRecipeList(res.data); })
@@ -57,13 +56,13 @@ export default function Ingredients() {
     };
     
 
-    console.log(recipeList);
+
 
     const findUser = usersList.find(user => user.email == email);
 
     const filteredRecipes = recipeList.filter(recipe => recipe.user === findUser?._id);
 
-    console.log(filteredRecipes);
+
 
     return (
         <>

@@ -8,7 +8,7 @@ import axios from 'axios';
 
 export default function SideBar({ emailChange, currentUser }) {
 
-    console.log(emailChange);
+ 
 
     let [usersList, setUsersList] = useState([]);
 
@@ -24,7 +24,6 @@ export default function SideBar({ emailChange, currentUser }) {
 
     const encodedUser = encodeURIComponent(findUser);
 
-    console.log(findUser);
 
     if(!findUser){
         findUser = currentUser;

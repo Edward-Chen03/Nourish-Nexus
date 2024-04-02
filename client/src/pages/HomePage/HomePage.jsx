@@ -17,14 +17,12 @@ export default function HomePage() {
     let [usersList, setUsersList] = useState([]);
 
 
-    console.log(emailChange);
-
     let email = decodeURIComponent(searchParams.get('email') || '');
     let currentUser = decodeURIComponent(searchParams.get('user') || '');
     if(!emailChange){
         emailChange = email;
 
-        console.log(emailChange);
+      
     }
     useEffect(() => {
         async function fetchData() {
@@ -38,7 +36,6 @@ export default function HomePage() {
                 setUsersList(response.data);
 
                 const findUser = response.data.find(user => user.email === emailChange);
-                console.log(findUser);
     
                 if (findUser) {
                     
@@ -49,9 +46,8 @@ export default function HomePage() {
                         gender: findUser.gender
                     });
     
-                    console.log("Settings have been updated");
                 } else {
-                    console.log("User not found");
+                    console.error("User not found");
                 }
     
             } catch (err) {
