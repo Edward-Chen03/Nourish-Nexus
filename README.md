@@ -2,11 +2,11 @@
 
 https://nourish-nexus.onrender.com
 
-(Note: This website will no longer be active after 4/30/2024 and its features may or may not work correctly)
+(Note: This website will no longer be maintained after 4/30/2024 and its features may or may not work correctly)
 
 ## Features
 - User Account
-- OpenAI API Interactive
+- Interactive access to the OpenAI API
 - Recipe Manager
   
 ## Instructions
