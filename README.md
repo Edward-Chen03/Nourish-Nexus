@@ -1,6 +1,6 @@
 ## Nourish-Nexus: YHACK 2024
 
-https://nourish-nexus.onrender.com
+[Live Demo](https://nourish-nexus.onrender.com)
 
 (Note: This website will no longer be maintained after 4/30/2024 and its features may or may not work correctly)
 
